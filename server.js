@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { connectDB } from './config/db.js';
+import foodRouter from './routes/foodRoute.js';
 
 
 
@@ -14,6 +15,9 @@ app.use(cors());
 
 //DB config
 connectDB();
+
+//api routes end point
+app.use('/api/food', foodRouter);
 
 app.get('/',(req, res)=>{  //the order of req and res is important
     res.send('hello world');
