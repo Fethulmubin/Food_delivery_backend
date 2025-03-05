@@ -18,6 +18,7 @@ connectDB();
 
 //api routes end point
 app.use('/api/food', foodRouter);
+app.use('/images', express.static('uploads'))
 
 app.get('/',(req, res)=>{  //the order of req and res is important
     res.send('hello world');

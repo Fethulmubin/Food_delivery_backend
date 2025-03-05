@@ -1,7 +1,9 @@
 import foodModel from "../models/foodModels.js";
 import fs from "fs";
 
-//add foods
+// Increase DNS timeout setting
+
+//add foods function
 
 const addFood = async (req, res)=>{
     let image_filename = req.file.filename;
@@ -28,10 +30,10 @@ const listFood = async (req, res)=>{
     try
     {
         const foods = await foodModel.find();
-        res.json({foods: foods, sucess: true});
+        res.json({foods: foods, success: true});
     }
     catch(err){
-        res.json({message: err});
+     res.json({message: err, success:false});
     }
 
 }
@@ -42,7 +44,7 @@ const removeFood = async (req, res)=>{
         fs.unlink(`uploads/${food.image}`,()=>{});
         // await food.remove();
         await foodModel.findByIdAndDelete(req.body.id);
-        res.json({message: 'food removed successfully'});
+        res.json({message: 'food removed successfully', success:true});
     } catch (error) {
         res.json({message: error, success: false});
     }
