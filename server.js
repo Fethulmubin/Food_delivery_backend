@@ -12,20 +12,20 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 //middleware
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
-app.use(cors());
+
 
 //DB config
 connectDB();
 
 //api routes end point
 app.use('/api/food', foodRouter);
-app.use('/api/user', userRouter)
-app.use('/images', express.static('uploads'))
+app.use('/api/user', userRouter);
+app.use('/images', express.static('uploads'));
 
-app.get('/',(req, res)=>{  //the order of req and res is important
-    res.send('hello world');
-})
+  //the order of req and res is important
+  
 app.listen(port, ()=>{
     console.log(`listening on localhost:${port}`);
 });

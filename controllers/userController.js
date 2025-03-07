@@ -16,6 +16,12 @@ const loginUser = async (req, res) =>{
         res.json({success: false, message:"Invalid credentials"});
       }
       const token = createToken(user._id);
+      res.cookie("token", token, {
+        // httpOnly: true, // Prevents JavaScript access (protection against XSS)
+        // secure: true, // Only send over HTTPS (disable in local development)
+        sameSite: "lax", // Prevents CSRF attacks
+        maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
+    });
       res.json({success: true, token})
    } catch (error) {
     res.json({success: false, message:"Something went wrong"})
@@ -27,7 +33,7 @@ const loginUser = async (req, res) =>{
 const createToken = (id)=> {
     return jwt.sign({id}, process.env.JWT_SECRET)
 }
-//registerng
+//registering
 
 const registerUser = async (req, res)=>{
     const {name, password, email} = req.body;
@@ -35,7 +41,7 @@ const registerUser = async (req, res)=>{
         const exist = await userModel.findOne({email})
         //check existing user
         if(exist){
-            res.status(400).json({message: 'User already exist', success: false})
+           return res.status(400).json({message: 'User already exist', success: false})
         }
         //validate email
         if(!validator.isEmail(email)){
@@ -57,7 +63,15 @@ const registerUser = async (req, res)=>{
 
         //create token
             const token = createToken(user._id);
-            res.json({success: true, token})
+            res.cookie("token", token, {
+                // httpOnly: true, // Prevents JavaScript access (protection against XSS)
+                // secure: true, // Only send over HTTPS (disable in local development)
+                sameSite: "lax", // Prevents CSRF attacks
+                maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
+            });
+        
+            // res.json({ message: "Logged in successfully!" })
+            res.json({success: true, token});
         
     } catch (error) {
         console.log(error)
@@ -66,5 +80,13 @@ const registerUser = async (req, res)=>{
     }
 
 }
+const logout = (req, res) =>{
+    const token = req.cookies.token;
+    if(!token){
+       return res.json({success: false, message:"unauthorized user"});
+    }
+    res.clearCookie('token');
+    res.json({success:true ,message:"successfully logged out"})
+}
 
-export {loginUser, registerUser}
+export {loginUser, registerUser, logout}
