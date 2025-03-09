@@ -81,7 +81,7 @@ const registerUser = async (req, res)=>{
 
 }
 const logout = (req, res) =>{
-    const token = req.cookies.token;
+    const token = req.cookies?.token;
     if(!token){
        return res.json({success: false, message:"unauthorized user"});
     }
@@ -89,4 +89,12 @@ const logout = (req, res) =>{
     res.json({success:true ,message:"successfully logged out"})
 }
 
-export {loginUser, registerUser, logout}
+const validate = (req, res) => {
+    const token = req.cookies?.token;
+    if(!token){
+        return res.json({success: false, message:"unauthorized user"});
+    }
+    res.json({success:true, token:token});
+}
+
+export {loginUser, registerUser, logout, validate}
