@@ -9,11 +9,11 @@ const loginUser = async (req, res) =>{
    try {
       const user = await userModel.findOne({email});
       if(!user){
-        res.json({success :false, message: "user does not exist"});
+        return res.json({success :false, message: "user does not exist"});
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if(!isMatch){
-        res.json({success: false, message:"Invalid credentials"});
+        return res.json({success: false, message:"Invalid credentials"});
       }
       const token = createToken(user._id);
       res.cookie("token", token, {
@@ -29,7 +29,7 @@ const loginUser = async (req, res) =>{
    }
 
 }
-//creating token method
+//creating token method during login
 const createToken = (id)=> {
     return jwt.sign({id}, process.env.JWT_SECRET)
 }

@@ -5,10 +5,7 @@ import foodRouter from './routes/foodRoute.js';
 import userRouter from './routes/userRoutes.js';
 import 'dotenv/config.js';
 import cookieParser from "cookie-parser";
-
-
-
-
+import cartRouter from './routes/cartRoute.js';
 
 //app config
 const app = express();
@@ -25,15 +22,16 @@ connectDB();
 
 //api routes end point
 app.use('/api/food', foodRouter);
-app.use('/api/user', userRouter);
+app.use('/api/user', userRouter)
 app.use('/images', express.static('uploads'));
+app.use('/api/cart', cartRouter)
 
+// connectDB();
   //the order of req and res is important
   
-app.listen(port, ()=>{
-    console.log(`listening on localhost:${port}`);
+app.listen(port, ()=>{ 
+  // connectDB();
+  console.log(`listening on localhost:${port}`)
+    
 });
 // UxmK1WQSlvOZrkjV
-// mongodb+srv://fetihul:<db_password>@cluster0.k3vs2.mongodb.net/?
-
-// retryWrites=true&w=majority&appName=Cluster0
