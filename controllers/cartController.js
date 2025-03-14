@@ -40,6 +40,7 @@ import userModel from '../models/userModel.js';
  }
 
  // fetch user cart data
+ //if you do not use await fro these type of mongoo func it will return error
 
  const getCart = async (req, res) => {
     try {

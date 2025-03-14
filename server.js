@@ -6,6 +6,7 @@ import userRouter from './routes/userRoutes.js';
 import 'dotenv/config.js';
 import cookieParser from "cookie-parser";
 import cartRouter from './routes/cartRoute.js';
+import orderRouter from './routes/orderRoute.js';
 
 //app config
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/food', foodRouter);
 app.use('/api/user', userRouter)
 app.use('/images', express.static('uploads'));
 app.use('/api/cart', cartRouter)
+app.use('/api/order', orderRouter);
 
 // connectDB();
   //the order of req and res is important
