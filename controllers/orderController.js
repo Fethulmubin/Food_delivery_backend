@@ -10,7 +10,7 @@ const placeOrder = async (req, res) => {
     try {
         const newOrder = new orderModel({
             userId: req.body.userId,
-            item: req.body.items,
+            items: req.body.items,
             amount:req.body.amount,
             address: req.body.address
         })
@@ -49,6 +49,24 @@ const placeOrder = async (req, res) => {
         console.log(error)
         res.json({success: false , message: error.message})
     }
+
+}
+
+const verifyPayment = async (req, res) =>{
+    try {
+        const {orderId, success} = req.body;
+        if(success){
+            await orderModel.findByIdAndUpdate(orderId, {payment: true});
+            res.json({success: true, message: "paid"})
+        }
+        else{
+            await orderModel.findByIdAndDelete(orderId);
+            res.json({success: false, message:"Not Paid"})
+        }
+    } catch (error) {
+        res.json({success: false, message: error.message});
+    }
+   
 
 }
 
