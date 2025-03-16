@@ -70,4 +70,32 @@ const verifyPayment = async (req, res) =>{
 
 }
 
-export {placeOrder}
+const userOrders = async (req, res) =>{ 
+   try {
+    const orders = await orderModel.find({userId: req.body.userId});
+    res.json({success: true, orders});
+
+   } catch (error) {
+    res.json({success:false, message: error.message});
+   }
+}
+//listing all orders for admin
+const listOrder = async (req, res) =>{
+    try {
+        const orders = await orderModel.find({});
+        res.json({success: true, orders});
+    } catch (error) {
+        res.json({success: false, message: error.message});
+    }
+}
+//updating order status for admin
+const updateStatus = async (req, res) =>{
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        res.json({success: true, message: "Status Updated"})
+    } catch (error) {
+        res.json({success: false, message:error.message});
+    }
+}
+
+export {placeOrder, verifyPayment, userOrders, listOrder, updateStatus}

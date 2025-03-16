@@ -44,13 +44,13 @@ import userModel from '../models/userModel.js';
 
  const getCart = async (req, res) => {
     try {
-        console.log(req.body.userId);
+        // console.log(req.body.userId);
         
         // Await the database query
         let userData = await userModel.findById(req.body.userId);
 
         let cartData = userData.cartData;
-        console.log(cartData);
+        // console.log(cartData);
 
         // If cartData is empty or undefined
         if (!cartData) {
