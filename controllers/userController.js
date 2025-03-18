@@ -97,4 +97,14 @@ const validate = (req, res) => {
     res.json({success:true, token:token});
 }
 
-export {loginUser, registerUser, logout, validate}
+//reurning all customers for admin
+const customers = async (req, res) => {
+    try {
+        const users = await userModel.countDocuments();
+        res.json({success: true, users: users});
+    } catch (error) {
+        res.json({success: false, message: 'Something went wrong'});
+    }
+}
+
+export {loginUser, registerUser, logout, validate, customers}

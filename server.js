@@ -13,7 +13,24 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 //middleware
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+const allowedOrigins = [
+  'http://localhost:5173',       // frontend
+  'http://localhost:5174',       // admin
+    // deployed admin panel
+]
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true // if you're using cookies or sessions
+}
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
