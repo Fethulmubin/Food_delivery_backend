@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import multer from 'multer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Connect to MongoDB
-export const connectDB = async () => {
+ const connectDB = async () => {
    try {
      const DB_Connection = await mongoose.connect(process.env.DB_URI)
      console.log('DB connected')
-   } 
-   catch (error) {
-      console.error('Connection error', error.message)
-   } 
+     } 
+     catch (error) {
+        console.error('Connection error', error.message)
+     } 
+  }
 
 
 // Configure Cloudinary
@@ -30,12 +34,11 @@ const storage = new CloudinaryStorage({
    public_id: (req, file) => `${Date.now()}--${file.originalname}`
   },
 });
-
-module.exports = {
+const upload = multer({ storage: storage });
+export { 
   cloudinary,
   storage,
+  upload,
+  connectDB 
 };
-
-  
-} 
 
