@@ -12,6 +12,11 @@ import orderRouter from './routes/orderRoute.js';
 const app = express();
 const port = process.env.PORT || 9000;
 
+// cloudname =dezckzjzf
+// apikey = 877175912835829
+// apisecret =jbVGfpTSx9Uu6YQuLnwEfOwhfUI
+// CLOUDINARY_URL=cloudinary://877175912835829:jbVGfpTSx9Uu6YQuLnwEfOwhfUI@dezckzjzf
+
 //middleware
 const allowedOrigins = [
   'http://localhost:5173',       // frontend
