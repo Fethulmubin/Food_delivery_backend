@@ -21,8 +21,8 @@ const port = process.env.PORT || 9000;
 //middleware
 const allowedOrigins = [
   'http://localhost:5173',       // frontend
-  'http://localhost:5174',       // admin
-    // deployed admin panel
+  'http://localhost:5174',  
+  'https://food-delivery-b8hs.onrender.com'     // admin
 ]
 const corsOptions = {
   origin: (origin, callback) => {
