@@ -17,9 +17,9 @@ const loginUser = async (req, res) =>{
       }
       const token = createToken(user._id);
       res.cookie("token", token, {
-        // httpOnly: true, // Prevents JavaScript access (protection against XSS)
+        httpOnly: true, // Prevents JavaScript access (protection against XSS)
         secure: true, // Only send over HTTPS (disable in local development
-        // sameSite: "lax", // Prevents CSRF attack
+        sameSite: "none", // Prevents CSRF attack
         maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
     });
       res.json({success: true, token})
@@ -64,9 +64,9 @@ const registerUser = async (req, res)=>{
         //create token
             const token = createToken(user._id);
             res.cookie("token", token, {
-                // httpOnly: true, // Prevents JavaScript access (protection against XSS)
+                httpOnly: true, // Prevents JavaScript access (protection against XSS)
                 secure: true, // Only send over HTTPS (disable in local development)
-                // sameSite: "lax", // Prevents CSRF attacks
+                sameSite: "none", // Prevents CSRF attacks
                 maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
             });
         
